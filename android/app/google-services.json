@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "751364835182",
+    "project_id": "j-anime-77fed",
+    "storage_bucket": "j-anime-77fed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751364835182:android:1b284f09bbe9afe889637f",
+        "android_client_info": {
+          "package_name": "com.fj20ths.JAnime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751364835182-t463umu8iiah35ami648aoq27hterid5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1kqDrGYcZaHVJB5pwoPbiGjsyPxK7Eoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751364835182-t463umu8iiah35ami648aoq27hterid5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

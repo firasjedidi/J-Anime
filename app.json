@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "J-Anime",
+    "slug": "J-Anime",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "https://auth.expo.io/@fj20ths/J-Anime",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F0F0F"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "dark",
+      "infoPlist": {
+        "UIUserInterfaceStyle": "dark"
+      },
+      "bundleIdentifier": "com.fj20ths.JAnime"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "userInterfaceStyle": "dark",
+      "package": "com.fj20ths.JAnime",
+      "googleServicesFile": "./google-services.json"
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-google-signin/google-signin"
+    ],
+    "web": {
+      "favicon": "./src/assets/favicon.png",
+      "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "57592869-2dcd-4f8b-9833-ee96697fa00b"
+      }
+    }
+  }
+}

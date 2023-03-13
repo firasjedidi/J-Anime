@@ -1,0 +1,35 @@
+manga =>{
+    -make the panel take the whole width of the screen.
+}
+hot&new=>{
+    -check the source page for another api and connect with current api .
+}
+banner => use the random anime api in the source ?
+player =>{
+    -change the color of button from white to slightlty gray 
+    -create check when goinh next or prev in videos
+    -handel skip retest when i click too many times.
+}
+
+details =>{
+  -the animation when it open an close.
+  -snackbar .
+  -detect user using navigation btn on the phone.
+}
+home => {-replace the screen of search and put it in home page banner.}
+auth =>{
+    -check how to use firebase .
+    -check graphql .
+    -navigation to home.
+    -give the user genreated image when hi first loged in .
+}
+settings =>{
+    -add user anime image if he have or give him random one put in the top .
+    -mange profile =>{
+        - updating profile if it passable firebase.
+    }  
+    -settings => {
+       -feedback if possibale after firebase configured.
+    }
+    -watching list delete && info && check how to do the static.
+}
