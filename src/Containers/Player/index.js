@@ -35,7 +35,6 @@ const Player = ({param,id}) => {
   };
   console.log("///////////////////////////////////////////////////////////  ",);
   console.log("/ep:/",ep,"//");
-  console.log("//",watching,"////watching[0]//",watching[0]);
   console.log("////////////////////////////////////////////////////////////");
   const unlaodplaybackInstance = async(stop) =>{
     try {
@@ -61,8 +60,6 @@ const Player = ({param,id}) => {
       var amoutWatched = (status.positionMillis / status.durationMillis ) * 100;
       if(status.isPlaying){
         const updated = await updatePlaylistProgress({ "updatePlaylistVideoId": id,"videoId": ep,"amount": amoutWatched})
-        console.log(updated,'updatePlaylistProgress');
-        // dispatch(updateWatching({id:y,current:{ id:ep,amount:amoutWatched},total:total,subordub:dub ? "dub":"sub",image:img,info:id2}));
       }
     }
   } 
@@ -88,7 +85,7 @@ const Player = ({param,id}) => {
         setLoading(false)
         setStatus(status);   
         HandleWatching(status); 
-        console.log(status.positionMillis,"mill");
+        console.log(amoutWatched ,"mill");
       } 
       if (status.isBuffering) {
         setLoading(true)
@@ -104,14 +101,16 @@ const Player = ({param,id}) => {
 
   const  continueWatching = async() =>{
     const playList = await getPlayList(id);
-    const {current,total} = playList.playlist;
-    console.log(current,"curnt player container",total);
-    setTotal(total)
+    const {current,total,videos} = playList.playlist;
+    setTotal(total);
     if (!videoRef.current) return false; 
-    if(current?.amount>0 && current?.amount < 92){
-      await videoRef.current.playFromPositionAsync(current?.amount * 15250) 
+    const videoIndex = videos.findIndex(vid => vid.id === ep);
+    const amount = videoIndex < 0 ? current?.amount : videos[videoIndex].amount;
+    console.log(current,"curnt player container",amount);
+    if(amount>0 && amount < 92){
+      await videoRef.current.playFromPositionAsync(amount * 15250) ;
     }else {
-      await videoRef.current.playFromPositionAsync(0* 15250)
+      await videoRef.current.playFromPositionAsync(0* 15250);
     }
   }
   const handlePress = async() => {

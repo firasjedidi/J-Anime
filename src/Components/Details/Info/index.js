@@ -29,22 +29,23 @@ const Info = ({data}) => {
       console.log(playlist,"u");
       if ( playlist.checkPlayList ) {   
         const { current, subordub ,_id,total} = playlist.checkPlayList;
-        const isDub = subordub === "dub";
-        const dub = isDub ? covertToDub(current.id) : covertToDub(episodes[0].id);
-        const sub = isDub ? covertToSub(episodes[0].id) : covertToSub(current.id);
-        const ep = isDub ? (type === "dub" ? dub : sub) : (type === "dub" ? dub : sub);
-        console.log(ep);
+        let ep = current.id ;
         if (subordub !== type) {  
           customAlert(
             'Verification',
             'Do you want to continue Watching from your left or start from the beginning ?',
             () => {
+              ep =  type === "dub" ? covertToDub(episodes[0].id) : episodes[0].id;
+              console.log(ep);
               navigationOnType({ep,type,id:_id,videos:true,total:episodes.length });
             },
             () => {
+              ep =  type === "dub" ? covertToDub(current.id) : current.id;
+              console.log(ep);
               navigationOnType({ep,type,id:_id,videos:false,total:episodes.length });
             }
           );
+          
         } else {
           navigationOnType({ep,type,id:_id,videos:false,total:episodes.length});
         } 
@@ -58,10 +59,10 @@ const Info = ({data}) => {
           total:episodes.length,image:image,info:id,
           userId:"6407372abc7d01d6832a102e"
         };
-        // const playListId = await createPlaylist(creation);
-        // console.log(playListId);
-        // if(playListId.createPlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.createPlaylist._id});
-        // else alert("somthing went wrong try again"+playListId)
+        const playListId = await createPlaylist(creation);
+        console.log(playListId);
+        if(playListId.createPlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.createPlaylist._id});
+        else alert("somthing went wrong try again"+playListId)
       }
     }
   }

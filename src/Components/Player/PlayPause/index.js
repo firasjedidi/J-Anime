@@ -20,21 +20,15 @@ const PlayPause =  forwardRef((props,ref) => {
     const sub = covertToSub(episode);
     const dub = covertToDub(episode);
     const playList = await getPlayList(id);
-    const {current,videos,subordub, _id} = playList.playlist;
+    const {current,videos, _id} = playList.playlist;
     delete current['__typename']
     const oldCurrent = current
-    if (videos.length >0) {
-      let newCurrent = videos.find(video => video.videoId === sub || dub )
-      if (newCurrent) {
-        delete newCurrent['__typename']
-        const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent})
-        console.log(added,'videos array');
-      }
-    } else {
-      const newCurrent = {id:episode,amount:0}
-      const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent})
-      console.log(added,"current");
-    }
+    console.log(oldCurrent,"oldCurrent");
+    const newCurrent = videos.find(video => video.id === sub || video.id === dub) || { id: episode, amount: 0 };
+    delete newCurrent['__typename'];
+    console.log(newCurrent,"newCurrent");
+    const added = await AddVideoToPlaylist({ newCurrent, addVideoToPlaylistId: _id, oldCurrent: current });
+    console.log(added, "current");
 }
   const handelNext = () => {  
     var s = ep.split("-").slice(-1);
@@ -42,7 +36,9 @@ const PlayPause =  forwardRef((props,ref) => {
     if(epNum <= total){
       var t = ep.split("-").slice(0,-1).concat(epNum).join("-");
       handel(t);
-      setEp(t);   
+      setTimeout(() => {
+        setEp(t);  
+      }, 2000);   
     }
   }
   const handelPrev = () => {
@@ -51,7 +47,10 @@ const PlayPause =  forwardRef((props,ref) => {
     if(epNum >= 1){
       var t = ep.split("-").slice(0,-1).concat(epNum).join("-");
       handel(t);
-      setEp(t);   
+      setTimeout(() => {
+        setEp(t);  
+      }, 2000);
+       
     }
   }
   const handelSkip = async(skiped) => {

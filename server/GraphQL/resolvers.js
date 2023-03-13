@@ -36,12 +36,21 @@ const resolvers = {
     },
     addVideoToPlaylist: async (parent, { id, newCurrent,oldCurrent },context) => {
       const playlist =  await resolvers.Query.playlist(parent,{id:id},context);
-      const video = oldCurrent;
       if (!playlist) {
         throw new Error('Playlist not found');
       };
+      console.log("yo");
       playlist.current = newCurrent;
-      playlist.videos = [...playlist.videos,video];
+      const videoIndex = playlist.videos.findIndex(vid => vid.id === oldCurrent.id);
+      console.log("index",videoIndex);
+      if (videoIndex < 0) {
+        console.log("ma famch",oldCurrent);
+        playlist.videos.push(oldCurrent);
+      } else {
+        console.log("fama playlist");
+        playlist.videos[videoIndex].amount = oldCurrent.amount;
+      }
+      
       const updatedPlaylist = await Playlist.findByIdAndUpdate(playlist._id, playlist, { new: true });
       return updatedPlaylist
     },
