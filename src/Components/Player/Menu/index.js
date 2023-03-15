@@ -15,21 +15,18 @@ const PlayerMenu = ({setActive,data,source,setSource,resize,setResize}) => {
             setSource(item.url);
             setOpenQuailty(false);
             setActive(prev => !prev);
-            console.log(item.url,item.quality);
         } else {
             setResize(item);
             setOpenResize(false);
             setActive(prev => !prev);
-            console.log(item);
         }
     }
   return (
-    <View 
-       className="w-56 h-full absolute   bg-[#151515]  rounded-l-xl  bottom-0 right-0  z-50  ">
+    <View className="w-56 h-full absolute duration-300  bg-[#151515]  rounded-l-xl right-8  z-20  ">
         <View className=" flex-row justify-end  my-3 mx-2" >
-                <Pressable onPress={() => setActive(prev => !prev)}>
-                    <XCircleIcon size={35} color={"white"}/>
-                </Pressable>      
+            <Pressable onPress={() => setActive(prev => !prev)}>
+                <XCircleIcon size={35} color={"white"}/>
+            </Pressable>      
         </View>
         <View className=" py-3   ">
             <View>

@@ -24,6 +24,7 @@ import GoogleSign from "./auth/GoogleSign";
 import FacebookSign from "./auth/FacebookSign";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import PlayerControlers from "./Player";
 export { 
     Card,
     Header,
@@ -36,6 +37,7 @@ export {
     Info,
     Desc,
     Tabs,
+    PlayerControlers,
     VideoPlayer,
     VideoBanner,
     PlayPause,

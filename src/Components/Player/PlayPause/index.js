@@ -7,9 +7,8 @@ import { covertToDub,covertToSub } from '../../../utlis/helpers/helper';
 import { getPlayList } from '../../../utlis/graphql/querys/queryHandler';
 import { AddVideoToPlaylist } from '../../../utlis/graphql/mutaions/mutaionsHandler';
 const PlayPause =  forwardRef((props,ref) => {
-  const {vidStatus,videoRef,setEp,ep,total,toggleControllers,id}=props;
-  const dispatch = useDispatch();
-  const {watching,skip} = useSelector(state => state.player);
+  const {vidStatus,videoRef,setEp,ep,total,id}=props;
+  const {skip} = useSelector(state => state.player);
   const handelPlayOrPause = async () => {
     if (!vidStatus.isLoaded) return false;
     vidStatus.isPlaying
@@ -17,18 +16,14 @@ const PlayPause =  forwardRef((props,ref) => {
     : await  videoRef.current.playAsync();
   }
   const handel = async (episode)=>{
-    const sub = covertToSub(episode);
-    const dub = covertToDub(episode);
-    const playList = await getPlayList(id);
-    const {current,videos, _id} = playList.playlist;
-    delete current['__typename']
-    const oldCurrent = current
-    console.log(oldCurrent,"oldCurrent");
-    const newCurrent = videos.find(video => video.id === sub || video.id === dub) || { id: episode, amount: 0 };
-    delete newCurrent['__typename'];
-    console.log(newCurrent,"newCurrent");
-    const added = await AddVideoToPlaylist({ newCurrent, addVideoToPlaylistId: _id, oldCurrent: current });
-    console.log(added, "current");
+  const sub = covertToSub(episode);
+  const dub = covertToDub(episode);
+  const playList = await getPlayList(id);
+  const {current,videos, _id} = playList.playlist;
+  delete current['__typename']
+  const newCurrent = videos.find(video => video.id === sub || video.id === dub) || { id: episode, amount: 0 };
+  delete newCurrent['__typename'];
+  const added = await AddVideoToPlaylist({ newCurrent, addVideoToPlaylistId: _id, oldCurrent: current });
 }
   const handelNext = () => {  
     var s = ep.split("-").slice(-1);
@@ -36,9 +31,7 @@ const PlayPause =  forwardRef((props,ref) => {
     if(epNum <= total){
       var t = ep.split("-").slice(0,-1).concat(epNum).join("-");
       handel(t);
-      setTimeout(() => {
-        setEp(t);  
-      }, 2000);   
+      setEp(t);    
     }
   }
   const handelPrev = () => {
@@ -47,10 +40,7 @@ const PlayPause =  forwardRef((props,ref) => {
     if(epNum >= 1){
       var t = ep.split("-").slice(0,-1).concat(epNum).join("-");
       handel(t);
-      setTimeout(() => {
-        setEp(t);  
-      }, 2000);
-       
+      setEp(t);     
     }
   }
   const handelSkip = async(skiped) => {
@@ -65,15 +55,16 @@ const PlayPause =  forwardRef((props,ref) => {
       handelNext()
     },
   }))
+
   return (
-    <View className={` w-full h-full absolute  -bottom-[90%] ${toggleControllers ? ' opacity-0 ':'opacity-1'}`} >
-      <View className="flex-row items-center justify-center space-x-12 ">
+    <View className={` w-screen h-auto absolute bottom-1 duration-300 `} >
+      <View className="flex-row items-center justify-center space-x-12  ">
         <Pressable onPress={handelPrev}>
           <BackwardIcon size={35} color={"white"} />
         </Pressable>
         <Pressable onPress={()=>handelSkip("-")} >
           <Image  source={require("../../../assets/rotate-left.png")}/>
-          <Text className="text-white absolute self-center top-2 ">{skip.amount}</Text>
+          <Text className="text-white absolute self-center top-1 ">{skip.amount}</Text>
         </Pressable>
         <Pressable onPress={handelPlayOrPause}>
           {
@@ -86,7 +77,7 @@ const PlayPause =  forwardRef((props,ref) => {
         </Pressable>
         <Pressable onPress={()=>handelSkip()}  >
           <Image  source={require("../../../assets/rotate-right.png")}/>
-          <Text className="text-white absolute self-center top-2 ">{skip.amount}</Text>
+          <Text className="text-white absolute self-center top-1 ">{skip.amount}</Text>
         </Pressable>
         <Pressable  onPress={handelNext}>
           <ForwardIcon size={35} color={"white"}/>

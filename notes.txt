@@ -7,7 +7,7 @@ hot&new=>{
 banner => use the random anime api in the source ?
 player =>{
     -change the color of button from white to slightlty gray 
-    -create check when goinh next or prev in videos
+    -create skip comp for next and intro and check silder ;
     -handel skip retest when i click too many times.
 }
 

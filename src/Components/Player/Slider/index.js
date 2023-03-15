@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import Slider from '@react-native-community/slider';
 const format = require('format-duration')
-const SliderBar = ({vidStatus,videoRef,toggleControllers}) => {
+const SliderBar = ({vidStatus,videoRef,}) => {
   const onSlideStart = async() => {
     await videoRef.current.pauseAsync()
   }
@@ -14,7 +14,7 @@ const SliderBar = ({vidStatus,videoRef,toggleControllers}) => {
   const current = format(parseInt(vidStatus.positionMillis));
   const duration = format(parseInt(vidStatus.durationMillis));
   return (
-    <View className={`w-full flex-row justify-between items-center absolute  px-3 bottom-10 left-0 right-0 ${toggleControllers ? ' opacity-0 ':'opacity-1'}`}>
+    <View className={`w-screen flex-row justify-around items-center absolute  px-2 bottom-12 left-0 right-0 duration-300 `}>
       <View  > 
         <Text className='text-white w-full text-sm  '>{vidStatus.isLoaded ? current : '00:00'}</Text>
       </View>
@@ -24,9 +24,10 @@ const SliderBar = ({vidStatus,videoRef,toggleControllers}) => {
         value={vidStatus.isLoaded ? vidStatus.positionMillis : 0}
         maximumValue={vidStatus.isLoaded ? vidStatus.durationMillis : 0}
         onSlidingStart={onSlideStart}
-        onSlidingComplete={onSlideComplete}   
+        onSlidingComplete={onSlideComplete} 
         minimumTrackTintColor="#FFFFFFF"
         maximumTrackTintColor="#FFFFFFF"
+        
       />
       <View  > 
         <Text className='text-white w-full text-sm  '>{vidStatus.isLoaded ? duration : '00:00'}</Text>

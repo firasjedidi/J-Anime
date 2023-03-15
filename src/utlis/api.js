@@ -99,7 +99,8 @@ const getStreaming = async (episodesId)=>{
     return data;
 }
 const getSkipTimes = async (malId, episodeNumber) => {
-  const { data } = await api.get(`/aniskip/${malId}/${episodeNumber}`);
+  
+  const { data } = await axios.get(`https://api.streamable.moe/api/aniskip/${malId}/${episodeNumber}`);
   if (!data)
     return {
       error: "No data Available",
@@ -332,11 +333,12 @@ export {
   getMovies,
   getInfo,
   getStreaming,
+  getSkipTimes,
   getSearch,
   getGenre,
   getAiring,
   manga,
   getSearchManga,
   getMangaInfo,
-  getMangaChapter
+  getMangaChapter,
 }
