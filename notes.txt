@@ -7,7 +7,7 @@ hot&new=>{
 banner => use the random anime api in the source ?
 player =>{
     -change the color of button from white to slightlty gray 
-    -create skip comp for next and intro and check silder ;
+    -check if intro passed the time to remove it  and check silder and didjust finsh ;
     -handel skip retest when i click too many times.
 }
 

@@ -1,4 +1,4 @@
-import { View,Pressable,Dimensions ,ActivityIndicator,Alert} from 'react-native'
+import { View,ActivityIndicator,Alert} from 'react-native'
 import React, {  useEffect, useRef, useState, useCallback}  from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import { useQuery } from 'react-query'
@@ -76,13 +76,14 @@ const Player = ({param,id}) => {
         setLoading(false)
         setStatus(status);   
         HandleWatching(status); 
-        console.log(amoutWatched ,"mill");
+        console.log(amoutWatched ,"mill",status.positionMillis/1000 );
       } 
       if (status.isBuffering) {
         setLoading(true);
       } 
       if ( status.didJustFinish) {
-        await finshed.current.finshed();
+        console.log("didJustFinish didJustFinish didJustFinish ");
+        // await finshed.current.finshed();
       }
       if (amoutWatched >92) {
         console.log("skipppppppppppp butttonn appearrrrrrrrrrrrr ");
@@ -97,7 +98,7 @@ const Player = ({param,id}) => {
       const intro = data.find((item) => item?.skipType.toLowerCase() === "op");
       const next = data.find((item) => item?.skipType.toLowerCase() === "ed");
       setSkips(prev=>({...prev,intro:intro?.interval?.endTime }))
-      setSkips(prev=>({...prev,next:next?.interval?.endTime }))
+      setSkips(prev=>({...prev,next:next?.interval?.startTime }))
     }
   }
   
@@ -107,13 +108,19 @@ const Player = ({param,id}) => {
     setTotal(total);
     if (!videoRef.current) return false; 
     const videoIndex = videos.findIndex(vid => vid.id === ep);
-    const amount = videoIndex < 0 ? current.amount : videos[videoIndex].amount > 0 && current.amount ? videos[videoIndex].amount : current.amount ;
-    console.log(current,"curnt player container",amount,videoIndex,skips,"skips");
-    if(amount>0 && amount < skips.next){
-      await videoRef.current.playFromPositionAsync(amount * 15250) ;
+    const amount = videoIndex < 0 ? current.amount : videos[videoIndex].amount > 0 && videos[videoIndex].amount >  current.amount ? videos[videoIndex].amount : current.amount ;
+    console.log(current,"curnt player container",skips.intro,skips.next);
+    const convertToSec = (amount* 15250 )/1000 
+    if(convertToSec > skips.intro && convertToSec < skips.next){
+      console.log("lena fel if ");
+      await videoRef.current.playFromPositionAsync(amount * 15250);
     }else {
-  
-      await videoRef.current.playFromPositionAsync(skips.intro*1000);
+      let auto = false
+      if (auto) await videoRef.current.playFromPositionAsync(skips.intro * 1000);
+      else{ 
+        console.log("lena fel else ->else");
+        await videoRef.current.playFromPositionAsync(0*15250);  
+      };
     }
   };
   const onSwipe = (gestureName, gestureState)  =>{
@@ -125,15 +132,13 @@ const Player = ({param,id}) => {
   useEffect(()=>{
     getSkips()
     if (status === "success" ) {
-      
       setSource(data.sources[4].url); 
     }
   },[data]);
 
   useCallback(()=>{ 
     getSkips() 
-    if (status === "success" ) {
-      
+    if (status === "success" ) {     
       setSource(data.sources[4].url);   
       unlaodplaybackInstance("stop");     
     }
@@ -163,17 +168,17 @@ const Player = ({param,id}) => {
         </View>
       )}
       {status === "success" && (
-        <>
+        <View className="bg-black">
           <VideoPlayer 
             videoRef={videoRef} source={source} resize={resize}
             onPlaybackStatusUpdate={onPlaybackStatusUpdate}   
           />
           <PlayerControlers 
-            source={source} setSource={setSource} resize={resize} setResize={setResize}
-            videoRef={videoRef} vidStatus={vidStatus}  setEp={setEp} ep={ep} total={total} data={data}
-            unlaodplaybackInstance={unlaodplaybackInstance} id={id}  finshed={finshed} loading={loading}
+            source={source} setSource={setSource} resize={resize} setResize={setResize} videoRef={videoRef} 
+            vidStatus={vidStatus}  setEp={setEp} ep={ep} total={total} data={data} id={id}  finshed={finshed}
+            unlaodplaybackInstance={unlaodplaybackInstance}  loading={loading} skips={skips}
           /> 
-        </>
+        </View>
       )}
     </GestureRecognizer>
   )

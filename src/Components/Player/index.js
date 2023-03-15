@@ -4,17 +4,19 @@ import PlayerMenu from './Menu';
 import VideoBanner from './VideoBanner';
 import SliderBar from './Slider';
 import PlayPause from './PlayPause';
+import Skips from './skips';
 const PlayerControlers = (props) => {
     const {
         source,setSource,resize,setResize,
         videoRef,vidStatus,ep,setEp,total,data,
-        id,unlaodplaybackInstance,finshed,loading
+        id,unlaodplaybackInstance,finshed,loading,
+        skips
     } = props;
     const [active, setActive] = useState(false);
     const [toggleControllers, setToggleControllers] = useState(false);
     const [lastPress,setlastPress  ] = useState(0);
     const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("screen");
-    const handlePress = async() => {
+    const handleDismess = async() => {
         var delta = new Date().getTime() - lastPress;
         if (delta < 250) {
           if (!vidStatus.isLoaded) return false;
@@ -28,7 +30,7 @@ const PlayerControlers = (props) => {
         setlastPress(new Date().getTime()); 
       };
   return (
-    <Pressable onPress={handlePress} className={`absolute ${toggleControllers ? ' opacity-0  ':'opacity-1 '}  bg-black/50`}  style={{ width: DEVICE_WIDTH,height: DEVICE_HEIGHT }} >
+    <Pressable onPress={handleDismess} className={`absolute ${toggleControllers ? ' opacity-0  ':'opacity-1 '}  `}  style={{ width: DEVICE_WIDTH,height: DEVICE_HEIGHT }} >
         {active && (
             <PlayerMenu 
                 setActive={setActive} data={data}
@@ -36,19 +38,25 @@ const PlayerControlers = (props) => {
                 resize={resize} setResize={setResize} 
             />
         )}
+        
         <VideoBanner 
             setActive={setActive} ep={ep}
             unlaodplaybackInstance={unlaodplaybackInstance}
         />
+
         <SliderBar   
             videoRef={videoRef} vidStatus={vidStatus}
         />
+
         {loading && (
             <View className=" h-full flex-row justify-center ">
                 <ActivityIndicator size={"large"} />
             </View>
-        )}         
-        
+        )} 
+        <Skips 
+            skips={skips} vidStatus={vidStatus} 
+            finshed={finshed} videoRef={videoRef} 
+        />
         <PlayPause 
             videoRef={videoRef} vidStatus={vidStatus}
             setEp={setEp} ep={ep} total={total} 

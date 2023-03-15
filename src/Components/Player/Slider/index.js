@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,Dimensions } from 'react-native'
 import React from 'react'
 import Slider from '@react-native-community/slider';
 const format = require('format-duration')
@@ -13,8 +13,9 @@ const SliderBar = ({vidStatus,videoRef,}) => {
   }
   const current = format(parseInt(vidStatus.positionMillis));
   const duration = format(parseInt(vidStatus.durationMillis));
+  const { width: DEVICE_WIDTH} = Dimensions.get("window");
   return (
-    <View className={`w-screen flex-row justify-around items-center absolute  px-2 bottom-12 left-0 right-0 duration-300 `}>
+    <View className={` flex-row justify-around items-center absolute  px-1 bottom-12 left-0 right-0 duration-300 `} style={{width:DEVICE_WIDTH}}>
       <View  > 
         <Text className='text-white w-full text-sm  '>{vidStatus.isLoaded ? current : '00:00'}</Text>
       </View>

@@ -1,14 +1,14 @@
-import { View, Pressable,Image,Text } from 'react-native'
+import { View, Pressable,Image,Text,Dimensions } from 'react-native'
 import React, {  forwardRef,useImperativeHandle}  from 'react'
 import {PlayIcon,PauseIcon,ForwardIcon,BackwardIcon,} from 'react-native-heroicons/mini';
 import { useSelector,useDispatch } from 'react-redux'
-import { checkvideo,updateWatching } from '../../../Redux-Store/PlayerChange'
 import { covertToDub,covertToSub } from '../../../utlis/helpers/helper';
 import { getPlayList } from '../../../utlis/graphql/querys/queryHandler';
 import { AddVideoToPlaylist } from '../../../utlis/graphql/mutaions/mutaionsHandler';
 const PlayPause =  forwardRef((props,ref) => {
   const {vidStatus,videoRef,setEp,ep,total,id}=props;
   const {skip} = useSelector(state => state.player);
+  const { width: DEVICE_WIDTH} = Dimensions.get("window");
   const handelPlayOrPause = async () => {
     if (!vidStatus.isLoaded) return false;
     vidStatus.isPlaying
@@ -57,7 +57,7 @@ const PlayPause =  forwardRef((props,ref) => {
   }))
 
   return (
-    <View className={` w-screen h-auto absolute bottom-1 duration-300 `} >
+    <View className={` h-auto absolute bottom-1 duration-300 `} style={{width:DEVICE_WIDTH}}>
       <View className="flex-row items-center justify-center space-x-12  ">
         <Pressable onPress={handelPrev}>
           <BackwardIcon size={35} color={"white"} />
