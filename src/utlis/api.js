@@ -66,10 +66,16 @@ const getRandom = async (page=2,perpage=20)=>{
   return {
     error: "No data Available",
   };
-
   return newres ? newres : res;
 }
-
+const getBannerAnime = async()=>{
+  const {data} = await api.get(`/random-anime`)
+  if (!data)
+    return {
+      error: "No data Available",
+    };
+  return data;
+}
 const getAiring= async (bool)=>{
   const {data:{results}} = await api.get(`/airing-schedule?notYetAired=${bool}`)
   if (!results)
@@ -303,11 +309,11 @@ const getSearchManga = async (serach,page=1,perpage=25)=>{
         return {
           error: "No data Available",
         };
-
       return results;
 }
 const getMangaInfo = async (id)=>{
-  const {data} = await axios.get(`https://api.consumet.org/meta/anilist-manga/info/${id}`)
+
+  const {data} = await axios.get(`https://api.consumet.org/meta/anilist-manga/info/${id}`,{ params: { provider: "mangakakalot" }})
   if (!data)
       return {
         error: "No data Available",
@@ -315,12 +321,11 @@ const getMangaInfo = async (id)=>{
     return data;
 }
 const getMangaChapter = async (chapterId,page=1,perpage=25)=>{
-  const {data} = await axios.get(`https://api.consumet.org/meta/anilist-manga/read?chapterId=${chapterId}`)
+  const {data} = await axios.get(`https://api.consumet.org/meta/anilist-manga/read?chapterId=${chapterId}&provider=mangakakalot`)
   if (!data)
       return {
         error: "No data Available",
       };
-      console.log(data,"chap");
     return data;
 }
 export {
@@ -341,4 +346,5 @@ export {
   getSearchManga,
   getMangaInfo,
   getMangaChapter,
+  getBannerAnime,
 }

@@ -22,8 +22,8 @@ const SliderBar = ({vidStatus,videoRef,}) => {
       <Slider   
         style={{width:"80%"}}
         disabled={!vidStatus.isLoaded}
-        value={vidStatus.isLoaded ? vidStatus.positionMillis : 0}
-        maximumValue={vidStatus.isLoaded ? vidStatus.durationMillis : 0}
+        value={!vidStatus.isLoaded ? 0: vidStatus.positionMillis }
+        maximumValue={!vidStatus.isLoaded ? 0:  vidStatus.durationMillis}
         onSlidingStart={onSlideStart}
         onSlidingComplete={onSlideComplete} 
         minimumTrackTintColor="#FFFFFFF"

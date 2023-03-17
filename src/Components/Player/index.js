@@ -28,7 +28,7 @@ const PlayerControlers = (props) => {
          active ? setActive(prev =>!prev) : null;
         }  
         setlastPress(new Date().getTime()); 
-      };
+    };
   return (
     <Pressable onPress={handleDismess} className={`absolute ${toggleControllers ? ' opacity-0  ':'opacity-1 '}  `}  style={{ width: DEVICE_WIDTH,height: DEVICE_HEIGHT }} >
         {active && (
@@ -49,7 +49,7 @@ const PlayerControlers = (props) => {
         />
 
         {loading && (
-            <View className=" h-full flex-row justify-center ">
+            <View className={`h-full flex-row justify-center  `}>
                 <ActivityIndicator size={"large"} />
             </View>
         )} 

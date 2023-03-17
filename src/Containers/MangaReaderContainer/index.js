@@ -6,15 +6,13 @@ import { MangaHeader,MangaPages } from '../../Components'
 const MangaReaderContainer = ({param,cp}) => {
   const [p,setP] = useState(param)
   const [ chp,setChp ]= useState(cp)
-    const {data,status} = useQuery(['MangaReade',p],()=>getMangaChapter(p),{
-        cacheTime: 0,
-    })
+    const {data,status} = useQuery(['MangaReade',p],()=>getMangaChapter(p),{cacheTime: 0,})
   return (
     <View>
         {status === "loading" && <Text>loading...</Text>}
         {status === "success" && (
           <>
-            < MangaHeader header={p} setP={setP} cp={chp} />
+            < MangaHeader header={data[0]} setP={setP} cp={chp} p={p} />
             < MangaPages data={data} />
           </>
         )}

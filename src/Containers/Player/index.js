@@ -60,7 +60,7 @@ const Player = ({param,id}) => {
       if (status.error) {
         Alert.alert(
           'Error',
-          'Something  caused this error to appear'+status.error,
+          'Something  caused this error to appear' + status.error,
           [{
             text:"Ok",
             onPress:()=>{navigation.goBack()},
@@ -82,12 +82,13 @@ const Player = ({param,id}) => {
         setLoading(true);
       } 
       if ( status.didJustFinish) {
+        let auto = false
         console.log("didJustFinish didJustFinish didJustFinish ");
-        // await finshed.current.finshed();
+        if(auto) await finshed.current.finshed();
+        else console.log("didJustFinish222 didJustFinish2222 didJustFinish22222 ");
+
       }
-      if (amoutWatched >92) {
-        console.log("skipppppppppppp butttonn appearrrrrrrrrrrrr ");
-      }
+      
     } 
   };
   const getSkips = async()=>{
@@ -109,16 +110,13 @@ const Player = ({param,id}) => {
     if (!videoRef.current) return false; 
     const videoIndex = videos.findIndex(vid => vid.id === ep);
     const amount = videoIndex < 0 ? current.amount : videos[videoIndex].amount > 0 && videos[videoIndex].amount >  current.amount ? videos[videoIndex].amount : current.amount ;
-    console.log(current,"curnt player container",skips.intro,skips.next);
     const convertToSec = (amount* 15250 )/1000 
     if(convertToSec > skips.intro && convertToSec < skips.next){
-      console.log("lena fel if ");
       await videoRef.current.playFromPositionAsync(amount * 15250);
     }else {
       let auto = false
       if (auto) await videoRef.current.playFromPositionAsync(skips.intro * 1000);
       else{ 
-        console.log("lena fel else ->else");
         await videoRef.current.playFromPositionAsync(0*15250);  
       };
     }

@@ -5,11 +5,10 @@ import {getMangaInfo} from '../../utlis/api'
 import { TopImage,Info,Desc,Tabs } from '../../Components'
 import { InfoScel } from '../../Components/skeletens';
 const MangaDetail = ({params}) => {
-    console.log(params,"manga");
-    const {data,status} = useQuery(['MangaInfo',params],()=>getMangaInfo(parseInt(params)),{
-        cacheTime: 0,
-    })
-    
+  console.log(params,"manga");
+  const {data,status,error} = useQuery(['MangaInfo',params],()=>getMangaInfo(parseInt(params),{cacheTime:0}),{
+      cacheTime: 0,
+  })
   return (
     <View>
         {status === "loading" && <InfoScel/>}

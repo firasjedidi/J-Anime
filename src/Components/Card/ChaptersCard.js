@@ -7,7 +7,7 @@ const ChaptersCard = ({data,img}) => {
   const totalPageCount = Math.ceil(data.length / pageSize);
   // Math.ceil(100 / 25) for getting the certen page 
   const pages = new Array(totalPageCount).fill(0);
- 
+ console.log(data )
   return (
     <View className="my-1  ">
       <ScrollView className="mb-5 ml-3" horizontal={true} showsHorizontalScrollIndicator={false} >
@@ -34,7 +34,7 @@ const ChaptersCard = ({data,img}) => {
                         <Image className="w-32 h-16 rounded-sm" source={{uri:img.cover}}/>
                     </View>
                     <View  className=" w-48 h-auto">
-                        <Text className="text-white  ">{ch.title ? ch.number + "." : ""} {ch.title ? ch.title : ch.id.split("-").join(" ")}</Text>
+                        <Text className="text-white  "> {ch.title ? ch.title : ch.id.split("-").join(" ")}</Text>
                     </View>
                 </View>
             </View>
