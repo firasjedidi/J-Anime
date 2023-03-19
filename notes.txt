@@ -1,6 +1,3 @@
-manga =>{
-    -the image sometimes load chek the source .
-}
 hot&new=>{
     -check the source page for another api and connect with current api .
 }
@@ -8,13 +5,10 @@ banner bottom section =>navigation with check of playlist;
 player =>{
     -handel skip retest when i click too many times.
 }
-
 details =>{
   -the animation when it open an close.
-  -snackbar .
   -detect user using navigation btn on the phone.
 }
-home => {-replace the screen of search and put it in home page banner.}
 auth =>{
     -check how to use firebase .
     -check graphql .

@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home,SearchStack,MangaStack,NewStack} from './StackNav';
-import { HomeIcon,MagnifyingGlassIcon,BookmarkIcon,FireIcon} from "react-native-heroicons/outline";
+import { Home,MangaStack,NewStack} from './StackNav';
+import { HomeIcon,BookmarkIcon,FireIcon} from "react-native-heroicons/outline";
 import { useColorScheme } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
@@ -45,18 +45,7 @@ export default function BottomTabNav() {
          component={NewStack} 
      
        />
-      <Tab.Screen name="Search" 
-        options={{
-          headerShown:false,
-          tabBarIcon: ({ focused,color}) => {
-            return ( 
-              <MagnifyingGlassIcon   size={24} color={focused ? color : 'gray'}  style={{marginBottom:2}} />
-            )
-          },
-    
-        }} 
-        component={SearchStack} 
-      />
+     
       <Tab.Screen 
         name="Manga" 
         options={{

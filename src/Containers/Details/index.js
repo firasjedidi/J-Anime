@@ -36,7 +36,7 @@ const Details = ({params}) => {
             <TopImage cover={data.cover}/>
             <Info data={data}/>
             {fade && (
-              <FadeOutAlert duration={3000} message={'already added'} className=" w-28 h-7 duration-75 text-centerabsolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "  />
+              <FadeOutAlert duration={3000} message={'already added'}  />
             )}
             <Desc data={data}/>
             <Tabs data={data}/>

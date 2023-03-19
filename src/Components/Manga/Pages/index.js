@@ -8,11 +8,11 @@ const MangaPages = ({data}) => {
     const [chapter,setChapter] =  useState(data);
     const next = ()=>{
         if (page >= data.length - 1 ) return;
-        setPage(page + 1)
+        setPage(page + 1);
     }
     const prev = ()=>{
         if (page<=0) return;
-        setPage(page-1)
+        setPage(page-1);
     } 
     console.log(chapter);
   return (

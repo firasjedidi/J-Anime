@@ -73,6 +73,12 @@ function Auth() {
         name="SettingsScreen"
         component={Settings} 
       />
+      <Stack.Screen name="SearchStack" 
+        options={{ 
+          headerShown:false,
+        }}
+        component={Search} 
+      />
       <Stack.Screen
          options={{ 
            headerShown:false,
@@ -83,58 +89,32 @@ function Auth() {
     </Stack.Navigator>
   );
 }
- function SearchStack() {
-    return (
-      <Stack.Navigator >
-        <Stack.Screen name="SearchStack" 
-          options={{ 
-            headerShown:false,
-          }}
-          component={Search} 
-        />
-        <Stack.Screen 
-          options={{ 
-            headerShown:false,
-          }}
-          name="DetaliScreen"
-          component={DetailScreen} 
+function MangaStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ 
+          headerShown:false,
+        }}
+        name="MangaStack" 
+        component={MangaScreen} 
       />
-        <Stack.Screen
-          options={{ 
-            headerShown:false,
-          }}
-         name="PlayListStack" 
-         component={PlayList} 
-        />
-      </Stack.Navigator>
-    );
-  }
- function MangaStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ 
-            headerShown:false,
-          }}
-          name="MangaStack" 
-          component={MangaScreen} 
-        />
-        <Stack.Screen 
-          options={{ 
-            headerShown:false,
-          }}
-          name="MangaScreen"
-          component={MangaDetailScreen} 
-        />
-        <Stack.Screen 
-          options={{ 
-            headerShown:false,
-          }}
-          name="ReaderScreen"
-          component={MangaReader} 
-        />
-      </Stack.Navigator>
-    );
+      <Stack.Screen 
+        options={{ 
+          headerShown:false,
+        }}
+        name="MangaScreen"
+        component={MangaDetailScreen} 
+      />
+      <Stack.Screen 
+        options={{ 
+          headerShown:false,
+        }}
+        name="ReaderScreen"
+        component={MangaReader} 
+      />
+    </Stack.Navigator>
+  );
 }
 function NewStack() {
   return (
@@ -156,4 +136,4 @@ function NewStack() {
     </Stack.Navigator>
   );
 }
-export {NewStack,MangaStack,SearchStack,Home,Auth}
+export {NewStack,MangaStack,Home,Auth}
