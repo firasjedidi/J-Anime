@@ -7,6 +7,8 @@ import * as Facebook from 'expo-auth-session/providers/facebook';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { authed } from '../../Redux-Store/user';
+import { socialAuth } from '../../utlis/graphql/mutaions/mutaionsHandler'
+import { rGI } from '../../utlis/helpers/helper';
 WebBrowser.maybeCompleteAuthSession();
 const FacebookSign = () => {
     const dispatch = useDispatch()
@@ -28,14 +30,20 @@ const FacebookSign = () => {
     const fetchUserInfo = async()=>{
       try {
         let res = await axios.get (`https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,picture.type(large)`);
-        console.log(res.data,"usr");
         if (res.data) {
-            dispatch(authed(res.data))
+          setUser({email:res.data.email,password:res.data.id,image:rGI(),username:res.data.name});
+          auth();
         }
-        setUser(res.data);
-        
       } catch (error) {
         Alert.alert(error);
+      }
+    }
+    const auth = async()=>{
+      const res = await socialAuth(user);
+      if (res.socailAuth) {
+        dispatch(authed(res.socailAuth))
+      } else {
+        alert(res);
       }
     }
   return (

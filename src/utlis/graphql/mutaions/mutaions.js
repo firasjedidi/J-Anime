@@ -27,10 +27,42 @@ const ADD_VIDEO_TO_PLAYLIST = gql`
         }
     }
 `;
-
+const CREATE_USER = gql`
+    mutation CreateUser($username: String!, $email: String!, $password: String!, $image: String!) {
+        createUser(username: $username, email: $email, password: $password, image: $image) {
+            username
+            id
+            image
+            email  
+        }
+    }
+`;
+const SOCIAL_AUTH = gql`
+    mutation SocailAuth($username: String!, $email: String!, $password: String!, $image: String!) {
+        socailAuth(username: $username, email: $email, password: $password, image: $image) {
+            username
+            id
+            image
+            email
+        }
+    }
+`;
+const LOGIN = gql`
+    mutation Login($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
+            username
+            id
+            image
+            email
+        }
+    }
+`;
 export {
     CREATE_PLAYLIST,
     UPDATE_PLAYLIST,
     UPDATE_PLAYLIST_PROGRESS,
-    ADD_VIDEO_TO_PLAYLIST
+    ADD_VIDEO_TO_PLAYLIST,
+    CREATE_USER,
+    SOCIAL_AUTH,
+    LOGIN
 }

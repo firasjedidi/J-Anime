@@ -51,7 +51,7 @@ const RootNavigator = () => {
       }}
     >
       {
-       true
+       isAuth
         ?
         < BottomTabNav />  
         :

@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView, Animated ,Pressable,Image,Dimensions,Easing } from 'react-native'
+import { View, Text,SafeAreaView, Animated ,Pressable,Image,Dimensions,Easing, } from 'react-native'
 import React,{useState,useCallback} from 'react'
 import Global from '../../../Global';
 import { PencilIcon,ChevronRightIcon,Cog6ToothIcon ,XCircleIcon,ChevronUpIcon,ChevronDownIcon ,CheckIcon,ChevronLeftIcon} from 'react-native-heroicons/outline';
@@ -9,6 +9,7 @@ const Settings = ({navigation}) => {
   const dispatch = useDispatch();
   const [openQuality,setQuality] = useState(false);
   const [openSkip,setSkip] = useState(false);
+  const [openAutoSkip,setAutoSkip] = useState(false);
   const [Quality,setSelectedQuality] = useState(quality);
   const [Skip,setSelectedSkip] = useState(skip);
   const screenHeight = Dimensions.get('window').height;
@@ -65,7 +66,7 @@ const Settings = ({navigation}) => {
       <Pressable className="flex-row items-center p-2 justify-start "  onPress={()=>navigation.goBack()}>
         <ChevronLeftIcon size={26} color={"white"}/>  
       </Pressable>
-      <Pressable className="flex-row items-center mt-3 justify-center space-x-1" onPress={toggleModal}>
+      <Pressable className="flex-row items-center mt-3 justify-center space-x-1" >
           <PencilIcon size={16} color={"gray"}/>
           <Text className=" text-slate-300" >Manage Profile</Text>
       </Pressable>
@@ -85,7 +86,7 @@ const Settings = ({navigation}) => {
           <ChevronRightIcon size={25} color={"gray"}/>
         </Pressable>
 
-        <Pressable className=" flex-row items-center justify-between h-14 mt-2 space-x-1 bg-white/10" >
+        <Pressable className=" flex-row items-center justify-between h-14 mt-2 space-x-1 bg-white/10" onPress={toggleModal} >
           <View className="flex-row items-center px-2 space-x-3">
             <Cog6ToothIcon size={20} color={"white"}/>
             <Text className=" text-gray-300">Settings</Text>
@@ -106,7 +107,7 @@ const Settings = ({navigation}) => {
         <Pressable className=" flex-row items-center justify-between h-14 px-3 mt-6 space-x-1 bg-white/10"  onPress={(e)=>setQuality(prev=>!prev)}>
           <View className="flex-row items-center space-x-3">
             <Image source={require("../../assets/hd.png")}/>
-            <Text className=" text-gray-300">Video Quality:({Quality.dispaly})</Text>
+            <Text className=" text-gray-300">Video Quality: ({Quality.dispaly})</Text>
           </View>
           
           {openQuality ? <ChevronUpIcon size={25} color={"gray"}/>: <ChevronDownIcon size={25} color={"gray"}/>}
@@ -133,7 +134,7 @@ const Settings = ({navigation}) => {
         <Pressable className=" flex-row items-center justify-between h-14 mt-2  px-3 space-x-1 bg-white/10"  onPress={(e)=>setSkip(prev=>!prev)}>
           <View className="flex-row items-center  space-x-3">
             <Image source={require("../../assets/skip.png")}/>
-            <Text className=" text-gray-300">Skip forward and back:({Skip.dispaly})</Text>
+            <Text className=" text-gray-300">Skip forward and back: ({Skip.dispaly})</Text>
           </View>
           {openSkip ? <ChevronUpIcon size={25} color={"gray"}/>: <ChevronDownIcon size={25} color={"gray"}/>}
         </Pressable>
@@ -155,13 +156,31 @@ const Settings = ({navigation}) => {
             </>
           )}
         </View>
-        <Pressable className=" flex-row items-center justify-between h-14 mt-2  px-3 space-x-1 bg-white/10"  onPress={(e)=>setSkip(prev=>!prev)}>
+        <Pressable className=" flex-row items-center justify-between h-14 mt-2  px-3 space-x-1 bg-white/10"  onPress={(e)=>setAutoSkip(prev=>!prev)}>
           <View className="flex-row items-center  space-x-3">
-            <Image source={require("../../assets/feedback.png")}/>
-            <Text className=" text-gray-300">FeedBack</Text>
+            <Image source={require("../../assets/forward.png")}/>
+            <Text className=" text-gray-300">Auto Skip</Text>
           </View>
-          {openSkip ? <ChevronUpIcon size={25} color={"gray"}/>: <ChevronDownIcon size={25} color={"gray"}/>}
+          {openAutoSkip ? <ChevronUpIcon size={25} color={"gray"}/>: <ChevronDownIcon size={25} color={"gray"}/>}
         </Pressable>
+        <View className=" w-full h-auto ">
+          {openAutoSkip && (
+            <>
+              {skipConfig.map((item,index)=>(
+                  <Pressable key={index} className="transition-all ease-in bg-white/10 px-3 py-2 "  onPress={(e)=>select(false,item)}>
+                     {Skip.amount == item.amount ? 
+                      <View  className="flex-row items-center justify-between" >
+                        <Text className="text-gray-300">{item.dispaly}</Text>
+                        <CheckIcon size={20} color={"white"}/>
+                      </View> 
+                      :
+                      <Text className="text-gray-300">{item.dispaly}</Text>
+                    }
+                  </Pressable>
+                ))}
+            </>
+          )}
+        </View>
       </Animated.ScrollView>
     </SafeAreaView>
   )

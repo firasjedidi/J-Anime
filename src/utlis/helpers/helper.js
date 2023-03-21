@@ -19,81 +19,89 @@ const covertToDub = (episodeID) =>{
     return  dub
 }
 const customAlert = (title,message,noPress,okPress)=>{
-    Alert.alert(
-        title,
-        message,
-        [
-            {text: 'cancel',onPress: () =>{},style: 'cancel'},
-            {text: 'No',onPress:noPress},
-            {text: 'OK', onPress: okPress },
-        ]
-    )
+  Alert.alert(
+    title,
+    message,
+    [
+      {text: 'cancel',onPress: () =>{},style: 'cancel'},
+      {text: 'No',onPress:noPress},
+      {text: 'OK', onPress: okPress },
+    ]
+  )
+}
+const rGI = ()=>{
+  // random genreater image
+  const images = ["https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LEnJzyxSSM9PXoZhuNOvTwHaHa%26pid%3DApi&f=1&ipt=e69bd4e0ae87cbf606d4e1a68510354df653e3fc5e7509dfe218c68f92fe48cc&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.USXX-FX5VGYtPLcPdhH6uQHaHa%26pid%3DApi&f=1&ipt=341310c68092c4a7b42d019dfdb3843d371e04d781defa7cee9fe49589056c45&ipo=images",
+  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DrxDkQ3UbR2yxmzY9tHCcgHaHs%26pid%3DApi&f=1&ipt=fe0b4cfc0476bf0a8001b4addc490de87b192a4e67172f31b5af384f83d1be84&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.nQHAApX274tcaWhPxdywSwHaHa%26pid%3DApi&f=1&ipt=b496194a836be7826ca00d476b8bfefa165d04c92a8e2ec6dfec3deac649b858&ipo=images"]
+  const random = Math.floor(Math.random()*images.length);
+  return images[random];
 }
 export {
     animeNameConverter,
     covertToDub,
     covertToSub,
     customAlert,
+    rGI
 }
 
-const handle = async (episode)=>{
-    const sub = covertToSub(episode);
-    const dub = covertToDub(episode);
-    const playList = await getPlayList(id);
-    const {current,videos,subordub, _id} = playList.playlist;
-    if (videos.length >0) {
-        const newCurrent = videos.find(video => video.videoId === sub || dub )
-        if (newCurrent) {
-            const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent:current})
-            console.log(added,'videos array');
-        }
-    } else {
-        const newCurrent = {id:episode,amount:0}
-        const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent:current})
-        console.log(added,"current");
-    }
-}
-const handel = (tt) => {
-    const dub = ep.split('-').includes('dub');  
-    const t = dub ? ep.split('-').indexOf('dub') : ep.split('-').indexOf('episode');
-    const y = dub ? ep.split('-').slice(0,t).join(" ") : ep.split('-').slice(0,t).join(" ");
-    console.log("nextttttttttttttttttttt");
-    var  index ;
-    var  indexList;
-    var  list;
-    var img;
-    var id2;
-    if (watching.length > 0 ) {
-      index = watching.findIndex((watch)=> watch?.id === y);
-      list = watching[index].current;
-      img  = watching[index].image;
-      id2 = watching[index].info;
-      if (watching[index]?.list ) {
-        indexList = watching[index].list.findIndex((watch)=> watch.id === tt);
-      }else{
-        indexList =-1; 
-      }  
-    }else{
-      index =-1;    
-      // list = -1;
-    }  
-    if(index  >= 0){
-      console.log("wasellll play pause");
-      var amount = watching[index]?.current?.id === tt ?  watching[index]?.current?.amount :  indexList >= 0 && watching[index]?.list[indexList]?.id === tt ? watching[index]?.list[indexList]?.amount : 0;
-      console.log(amount,"ammmouunnnt");
-      if(amount){
-        console.log(list," have");
-        dispatch(updateWatching({id:y,current:{ id:tt,amount:amount },total:total,subordub:dub ? "dub":"sub",image:img,list:list,info:id2}));
-      }
-      else{
-        console.log(list,"don't have");
-        dispatch(updateWatching({id:y,current:{ id:tt,amount: 0},total:total,subordub:dub ? "dub":"sub",image:img,list:list,info:id2}));
-      }
-      }
-    else{
-     console.log("ma temchichhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2222222222222222222222é");
-    }
-  }
+// const handle = async (episode)=>{
+//     const sub = covertToSub(episode);
+//     const dub = covertToDub(episode);
+//     const playList = await getPlayList(id);
+//     const {current,videos,subordub, _id} = playList.playlist;
+//     if (videos.length >0) {
+//         const newCurrent = videos.find(video => video.videoId === sub || dub )
+//         if (newCurrent) {
+//             const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent:current})
+//             console.log(added,'videos array');
+//         }
+//     } else {
+//         const newCurrent = {id:episode,amount:0}
+//         const added = await AddVideoToPlaylist({newCurrent,addVideoToPlaylistId:_id,oldCurrent:current})
+//         console.log(added,"current");
+//     }
+// }
+// const handel = (tt) => {
+//     const dub = ep.split('-').includes('dub');  
+//     const t = dub ? ep.split('-').indexOf('dub') : ep.split('-').indexOf('episode');
+//     const y = dub ? ep.split('-').slice(0,t).join(" ") : ep.split('-').slice(0,t).join(" ");
+//     console.log("nextttttttttttttttttttt");
+//     var  index ;
+//     var  indexList;
+//     var  list;
+//     var img;
+//     var id2;
+//     if (watching.length > 0 ) {
+//       index = watching.findIndex((watch)=> watch?.id === y);
+//       list = watching[index].current;
+//       img  = watching[index].image;
+//       id2 = watching[index].info;
+//       if (watching[index]?.list ) {
+//         indexList = watching[index].list.findIndex((watch)=> watch.id === tt);
+//       }else{
+//         indexList =-1; 
+//       }  
+//     }else{
+//       index =-1;    
+//       // list = -1;
+//     }  
+//     if(index  >= 0){
+//       console.log("wasellll play pause");
+//       var amount = watching[index]?.current?.id === tt ?  watching[index]?.current?.amount :  indexList >= 0 && watching[index]?.list[indexList]?.id === tt ? watching[index]?.list[indexList]?.amount : 0;
+//       console.log(amount,"ammmouunnnt");
+//       if(amount){
+//         console.log(list," have");
+//         dispatch(updateWatching({id:y,current:{ id:tt,amount:amount },total:total,subordub:dub ? "dub":"sub",image:img,list:list,info:id2}));
+//       }
+//       else{
+//         console.log(list,"don't have");
+//         dispatch(updateWatching({id:y,current:{ id:tt,amount: 0},total:total,subordub:dub ? "dub":"sub",image:img,list:list,info:id2}));
+//       }
+//       }
+//     else{
+//      console.log("ma temchichhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh2222222222222222222222é");
+//     }
+//   }
 
 // const  continueWatching = async() =>{
 //     const dub = ep.split('-').includes('dub');  

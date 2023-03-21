@@ -6,12 +6,9 @@ import {WEB_CLIENT_ID,IOS_CLIENT_ID ,ANDROID_CLIENT_ID } from '@env'
 import * as AuthSession from 'expo-auth-session';
 import { useDispatch } from 'react-redux';
 import { authed } from '../../Redux-Store/user';
-import axios from 'axios'
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
-// import auth from '@react-native-firebase/auth';
-// GoogleSignin.configure({
-//   webClientId: '751364835182-t463umu8iiah35ami648aoq27hterid5.apps.googleusercontent.com',
-// });
+import axios from 'axios';
+import { rGI } from '../../utlis/helpers/helper';
+import { socialAuth } from '../../utlis/graphql/mutaions/mutaionsHandler'
 WebBrowser.maybeCompleteAuthSession();
 const GoogleSign = () => {
     const dispatch = useDispatch()
@@ -40,15 +37,22 @@ const GoogleSign = () => {
           }
         });
         if (res.data) {
-          // dispatch(authed(res.data));
-          console.log(res.data);
+          setUser( {email:res.data.email,password:res.data.id,image:rGI(),username:res.data.name});
+          auth()
         }
-        setUser(res.data);   
+          
       } catch (error) {
        console.log(error);
       }
     }
-  
+    const auth = async()=>{
+      const res = await socialAuth(user);
+      if (res.socailAuth) {
+        dispatch(authed(res.socailAuth))
+      } else {
+        alert(res);
+      }
+    }
   return (
     <TouchableOpacity 
       disabled={!request}

@@ -1,25 +1,30 @@
 import { View, Text,TextInput,TouchableOpacity } from 'react-native'
-import React from 'react'
-import auth from '@react-native-firebase/auth';
-const Login = () => {
-    const loginButton = ()=>{
-        auth()
-        .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-        .then(() => {
-            console.log('User account created & signed in!');
-        })
-        .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-            }
+import React,{useState} from 'react'
+import { useDispatch } from 'react-redux';
+import { authed } from '../../Redux-Store/user';
+import { login } from '../../utlis/graphql/mutaions/mutaionsHandler'
+import { useNavigation } from '@react-navigation/native';
 
-            if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+const Login = ({setAuthShow}) => {
+    const [info,setInfo] = useState({email:"",password:""})
+    const dispatch = useDispatch();
+    const navigation  = useNavigation();
+    const loginButton = async() => {
+        if (info.email === "" || info.password.length <8 ) {
+            alert(info.password.length <8 ? "password at least contain 8 charerter":"filed should not be empty ")
+        } else {
+            const res = await login(info);
+            console.log(res);
+            if (res.login) {
+                console.log("yoooo");
+                dispatch(authed(res.login));
+                // navigation.navigate('HomeScreen')
+            } else {
+                alert(res);
             }
-
-            console.error(error);
-        });
+        }
     }
+
   return (
     <View className="w-72 flex-col space-y-6 m-4 justify-center items-center">
         <TextInput 
@@ -28,6 +33,7 @@ const Login = () => {
             placeholder='Email' 
             cursorColor="white"
             clearTextOnFocus={true}
+            onChangeText={(e)=>setInfo(prev=>({...prev,email:e}))}
         />
         <TextInput 
             className="p-4  w-full border border-white text-white rounded-md  focus:outline-none   "
@@ -35,6 +41,7 @@ const Login = () => {
             placeholder='Passsword' 
             cursorColor="white"
             clearTextOnFocus={true}
+            onChangeText={(e)=>setInfo(prev=>({...prev,password:e}))}
             secureTextEntry
         />
         <TouchableOpacity className="bg-white w-20 " onPress={loginButton}>
@@ -42,7 +49,7 @@ const Login = () => {
         </TouchableOpacity>
         <View className="flex-row justify-center items-center">
             <Text className="text-slate-100 text-xs">Don't have account ?</Text>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={()=>setAuthShow(prev=>!prev)}>
                 <Text className="p-2 text-center text-blue-400 text-xs">Singup</Text>
             </TouchableOpacity>
         </View>

@@ -40,6 +40,8 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!, image: String!): User
+    socailAuth(username: String!, email: String!, password: String!, image: String!): User
+    login(email: String!, password: String!): User
     createPlaylist(name: String!, userId: ID!, total: Int!, subordub: String!, image: String!, info: String!, current: CurrentInput!  ): Playlist!
     addVideoToPlaylist(id: ID!, newCurrent: newCurrentInput!, oldCurrent: oldCurrentInput!): Playlist
     updatePlaylistVideo(id: ID!, videoId: ID!,  amount: Float): Playlist
