@@ -1,11 +1,13 @@
 import { View, Text,Pressable } from 'react-native'
 import React, {  useEffect, useState}  from 'react'
+import { useSelector,useDispatch } from 'react-redux'
 
 const Skips = ({skips,vidStatus,finshed,videoRef}) => {
     const [skipIntro, setSkipIntro] = useState(false);
     const [skipNext, setSkipNext] = useState(false);
     const positionMillis = vidStatus.positionMillis;
-  
+    const {autoIntro,autoNext} = useSelector(state => state.player);
+
     const handleSkiping = async (skipType) => {
       if (skipType === "intro") { 
         await videoRef.current.playFromPositionAsync(skips.intro * 1200);

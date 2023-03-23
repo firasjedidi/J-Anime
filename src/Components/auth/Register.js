@@ -9,7 +9,6 @@ const intailState = {email:"",password:"",image:"",username:""}
 const Register = ({setAuthShow}) => {
   const [info,setInfo] = useState(intailState);
   const dispatch = useDispatch();
-  const navigation  = useNavigation();
   const registerButton = async() => {
    setInfo(prev=>({...prev,image:rGI()}))
     if (info.email === "" || info.username === "" || info.password.length <8 ) {
@@ -52,7 +51,6 @@ const Register = ({setAuthShow}) => {
         cursorColor="white"
         clearTextOnFocus={true}
         onChangeText={(e)=>setInfo(prev=>({...prev,password:e}))}
-
         secureTextEntry
       />
       <TouchableOpacity className="bg-white w-20 " onPress={registerButton}>

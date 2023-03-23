@@ -11,6 +11,7 @@ import Manga from "./Manga";
 import MangaReaderContainer from "./MangaReaderContainer";
 import ContinueWatching from "./ContinueWatching";
 import AuthContainer from "./Auth";
+import SettingsContainer from "./Settings";
 export {
     Popular,
     Trending,
@@ -25,4 +26,5 @@ export {
     MangaReaderContainer,
     ContinueWatching,
     AuthContainer,
+    SettingsContainer
 }

@@ -105,7 +105,21 @@ const resolvers = {
       }
       const updatedPlaylist = await Playlist.findByIdAndUpdate(playlist._id, playlist, { new: true });
       return updatedPlaylist
-    }
+    },
+    updateUser:async (parent, {id,username, email, password,image  },context) => {
+      const user = await resolvers.Query.user(parent,{id:id},context)
+      const salt = await bcrypt.genSalt(10);
+      const hashedpassword = await bcrypt.hash(password,salt)
+      if(username && email && hashedpassword && image){
+        console.log('len');
+        user.email = email;
+        user.password = hashedpassword;
+        user.username = username;
+        user.image = image;
+      }
+      const updatedUser = await User.findByIdAndUpdate(user._id, user, { new: true });
+      return updatedUser
+    },
   },
 };
 module.exports = resolvers

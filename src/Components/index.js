@@ -11,10 +11,6 @@ import Info from './Details/Info'
 import Desc from './Details/Desc'
 import Tabs from './Details/Tabs'
 import VideoPlayer from './Player/VideoPlayer'
-import VideoBanner from './Player/VideoBanner'
-import PlayPause from "./Player/PlayPause"
-import SliderBar from "./Player/Slider"
-import PlayerMenu from './Player/Menu'
 import CommoningSoon from "./New&Hot/CommingSoon";
 import EveryoneWatching from "./New&Hot/Eeveryone_Watching";
 import MangaHeader from "./Manga/MangaHeader";
@@ -25,6 +21,9 @@ import FacebookSign from "./auth/FacebookSign";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import PlayerControlers from "./Player";
+import VideoSettings from "./settings/videoSettings";
+import SettingNavigation from "./settings/navigation";
+import Profile from "./settings/profile";
 export { 
     Card,
     Header,
@@ -39,10 +38,6 @@ export {
     Tabs,
     PlayerControlers,
     VideoPlayer,
-    VideoBanner,
-    PlayPause,
-    SliderBar,
-    PlayerMenu,
     CommoningSoon,
     EveryoneWatching,
     ChaptersCard,
@@ -53,4 +48,7 @@ export {
     FacebookSign,
     Login,
     Register,
+    VideoSettings,
+    SettingNavigation,
+    Profile
 }

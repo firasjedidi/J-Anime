@@ -1,26 +1,32 @@
 import { View, Text,Image,ScrollView ,Pressable} from 'react-native'
-import React, { useState }  from 'react'
+import React, { useState,useEffect }  from 'react'
 import sanitizeHtml from 'sanitize-html';
 import { PlayIcon} from "react-native-heroicons/mini";
+import { animeNameConverter, covertToDub, covertToSub, customAlert } from '../../utlis/helpers/helper';
+import {checkPlaylist} from '../../utlis/graphql/querys/queryHandler';
 import { useSelector } from 'react-redux';
 const EpisodesCard = ({data}) => {
-  const {watching} = useSelector(state => state.player);
-  var t = data[0]?.id.split('-').indexOf('episode');
-  var y = data[0]?.id.split('-').slice(0,t).join(" ");
-  var  index ;
-  var  id;  
-  if (watching?.length > 0 ) {
-    index = watching.findIndex((watch)=> watch?.id === y);
-    id = watching[index]?.current.id;
-  }else{
-    index =-1;
-    id = ""; 
-  }
-  const current = index >= 0 && id ? id.split('-').slice(-1) :  data[0]?.id ?  data[0]?.id.split('-').slice(-1) : 1 ;
   const pageSize = 25;
-  const [selectedPage, setSelectedPage] = useState(Math.ceil(current / pageSize));
+  const [selectedPage, setSelectedPage] = useState(Math.ceil(0 / pageSize));
   const totalPageCount = Math.ceil(data.length / pageSize);
   const pages = new Array(totalPageCount).fill(0);
+  const [watching,setWatching] =  useState({});
+  const {user} = useSelector(state => state.user);
+  const watched = async() =>{
+    const animeName = animeNameConverter(data[0]?.id );
+    const playlist = await checkPlaylist({user:user.id,videoId:animeName});
+    if ( playlist.checkPlayList ) {
+      const { current} = playlist.checkPlayList;
+      setWatching(playlist.checkPlayList);
+      const currentPage = current ? current.id.split('-').slice(-1).join(" ") :  data[0]?.id ?  data[0]?.id.split('-').slice(-1).join(" ") : 1 ;
+      setSelectedPage( Math.ceil(currentPage / pageSize))
+    }else setSelectedPage(Math.ceil(1 / pageSize));
+    
+  }
+  useEffect(()=>{
+    watched()
+  },[])
+ 
   return (
     <View className="my-1 ">
       <ScrollView className="mb-5 ml-3" horizontal={true} showsHorizontalScrollIndicator={false} >
@@ -49,20 +55,20 @@ const EpisodesCard = ({data}) => {
                       <View className="absolute self-center w-7 h-7 bottom-5 border-2 rounded-full bg-black/60  border-white items-center   ">
                         <PlayIcon  style={{position:"absolute",alignSelf:"center",top:4}}  size={16} color="white"/>
                       </View>
-                      {watching.map((item )=> 
-                        item?.id === y ?
-                          item?.current.id  === ep.id ?   
-                            <View key={item?.id} className=" bg-blue-500 h-1 absolute left-0  bottom-0"  style={{width: item?.current.amount+"%"}}   />
+                      {
+                        watching.hasOwnProperty("current")  ?
+                          watching.current.id  === ep.id ?   
+                            <View key={watching?.id} className=" bg-blue-500 h-1 absolute left-0  bottom-0"  style={{width: watching?.current.amount+"%"}}   />
                           :
-                          item?.list &&  item?.list.map(it=>
+                          watching.videos &&  watching.videos.map(it=>
                             it?.id === ep.id ?
                               <View key={it?.id} className=" bg-blue-500 h-1 absolute left-0  bottom-0"  style={{width: it?.amount+"%"}}   />
                             : 
                               null 
-                          ) 
-                        :
-                        null 
-                      )}
+                          )  
+                          : 
+                        null
+                      }
                       
                     </View>
                     <View  className=" w-48 h-auto">

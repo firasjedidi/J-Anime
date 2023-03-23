@@ -8,12 +8,11 @@ import {checkPlaylist} from '../../../utlis/graphql/querys/queryHandler';
 import {createPlaylist,updatePlaylist} from '../../../utlis/graphql/mutaions/mutaionsHandler'
 const Info = ({data}) => {
   const navigation = useNavigation()
-  const {watching,watched} = useSelector(state => state.player);
+  const {user} = useSelector(state => state.user);
   const navigationOnType = async({ep, type, id, videos,total}) => {
     const subordub = type === "dub" ? "dub" : "sub";
     const update = { current: { id: ep}, subordub, updatePlaylistId: id, videos,total };
     const playListId = await updatePlaylist(update);
-    console.log(playListId,'up');
     if(playListId.updatePlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.updatePlaylist._id});
     else alert("somthing went wrong try again"+playListId)
   }
@@ -25,8 +24,7 @@ const Info = ({data}) => {
     } else {
       const {image,episodes,id} = data
       const animeName = animeNameConverter(episodes[0].id);
-      const playlist = await checkPlaylist({user:"6407372abc7d01d6832a102e",videoId:animeName});
-      console.log(playlist,"u");
+      const playlist = await checkPlaylist({user:user.id,videoId:animeName});
       if ( playlist.checkPlayList ) {   
         const { current, subordub ,_id,total} = playlist.checkPlayList;
         let ep = current.id ;
@@ -36,12 +34,10 @@ const Info = ({data}) => {
             'Do you want to continue Watching from your left or start from the beginning ?',
             () => {
               ep =  type === "dub" ? covertToDub(episodes[0].id) : episodes[0].id;
-              console.log(ep);
               navigationOnType({ep,type,id:_id,videos:true,total:episodes.length });
             },
             () => {
               ep =  type === "dub" ? covertToDub(current.id) : current.id;
-              console.log(ep);
               navigationOnType({ep,type,id:_id,videos:false,total:episodes.length });
             }
           );
@@ -51,16 +47,14 @@ const Info = ({data}) => {
         } 
       } else {   
         // creation of playlist and the navigation
-        console.log("no playlist");
         const subordub =  type === "dub" ? "dub" : "sub";
         const ep = type === "dub" ? covertToDub(data.episodes[0].id) : data.episodes[0].id;
         const creation = {
           name:animeName,current:{id:ep},subordub,
           total:episodes.length,image:image,info:id,
-          userId:"6407372abc7d01d6832a102e"
+          userId:user.id
         };
         const playListId = await createPlaylist(creation);
-        console.log(playListId);
         if(playListId.createPlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.createPlaylist._id});
         else alert("somthing went wrong try again"+playListId)
       }

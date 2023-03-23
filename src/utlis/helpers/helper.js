@@ -29,10 +29,10 @@ const customAlert = (title,message,noPress,okPress)=>{
     ]
   )
 }
+const images = ["https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LEnJzyxSSM9PXoZhuNOvTwHaHa%26pid%3DApi&f=1&ipt=e69bd4e0ae87cbf606d4e1a68510354df653e3fc5e7509dfe218c68f92fe48cc&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.USXX-FX5VGYtPLcPdhH6uQHaHa%26pid%3DApi&f=1&ipt=341310c68092c4a7b42d019dfdb3843d371e04d781defa7cee9fe49589056c45&ipo=images",
+"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DrxDkQ3UbR2yxmzY9tHCcgHaHs%26pid%3DApi&f=1&ipt=fe0b4cfc0476bf0a8001b4addc490de87b192a4e67172f31b5af384f83d1be84&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.nQHAApX274tcaWhPxdywSwHaHa%26pid%3DApi&f=1&ipt=b496194a836be7826ca00d476b8bfefa165d04c92a8e2ec6dfec3deac649b858&ipo=images"]
 const rGI = ()=>{
   // random genreater image
-  const images = ["https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LEnJzyxSSM9PXoZhuNOvTwHaHa%26pid%3DApi&f=1&ipt=e69bd4e0ae87cbf606d4e1a68510354df653e3fc5e7509dfe218c68f92fe48cc&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.USXX-FX5VGYtPLcPdhH6uQHaHa%26pid%3DApi&f=1&ipt=341310c68092c4a7b42d019dfdb3843d371e04d781defa7cee9fe49589056c45&ipo=images",
-  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DrxDkQ3UbR2yxmzY9tHCcgHaHs%26pid%3DApi&f=1&ipt=fe0b4cfc0476bf0a8001b4addc490de87b192a4e67172f31b5af384f83d1be84&ipo=images","https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.nQHAApX274tcaWhPxdywSwHaHa%26pid%3DApi&f=1&ipt=b496194a836be7826ca00d476b8bfefa165d04c92a8e2ec6dfec3deac649b858&ipo=images"]
   const random = Math.floor(Math.random()*images.length);
   return images[random];
 }
@@ -41,7 +41,8 @@ export {
     covertToDub,
     covertToSub,
     customAlert,
-    rGI
+    rGI,
+    images
 }
 
 // const handle = async (episode)=>{

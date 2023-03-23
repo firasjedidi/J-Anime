@@ -1,7 +1,8 @@
 hot&new=>{
     -check the source page for another api and connect with current api .
 }
-banner bottom section =>navigation with check of playlist;
+logo for the app
+banner bottom section => navigation with check of playlist;
 player =>{
     -handel skip retest when i click too many times.
 }
@@ -10,14 +11,8 @@ details =>{
   -detect user using navigation btn on the phone.
 }
 auth =>{
-    -refix of auth awiait in socail.
+    -refix of auth await in socail.
 }
 settings =>{
-    -add auto skip intro and next;
-    -add user anime image if he have or give him random one  .
-    -mange profile =>{
-        - updating profile .
-    }  
-    
     -watching list delete && info && check how to do the static.
 }

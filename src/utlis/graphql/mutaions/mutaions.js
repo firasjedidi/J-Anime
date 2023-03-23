@@ -57,6 +57,16 @@ const LOGIN = gql`
         }
     }
 `;
+const UPDATE_PROFILE = gql`
+    mutation UpdateUser($updateUserId: ID!, $username: String!, $email: String!, $password: String!, $image: String!) {
+        updateUser(id: $updateUserId, username: $username, email: $email, password: $password, image: $image) {
+            email
+            id
+            image
+            username
+        }
+    }
+`;
 export {
     CREATE_PLAYLIST,
     UPDATE_PLAYLIST,
@@ -64,5 +74,6 @@ export {
     ADD_VIDEO_TO_PLAYLIST,
     CREATE_USER,
     SOCIAL_AUTH,
-    LOGIN
+    LOGIN,
+    UPDATE_PROFILE
 }

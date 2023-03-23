@@ -46,6 +46,7 @@ const typeDefs = gql`
     addVideoToPlaylist(id: ID!, newCurrent: newCurrentInput!, oldCurrent: oldCurrentInput!): Playlist
     updatePlaylistVideo(id: ID!, videoId: ID!,  amount: Float): Playlist
     updatePlaylist(id: ID!, subordub: String!, current: CurrentInput!, videos:  Boolean!, total: Int!, ):Playlist!
+    updateUser(id: ID!, username: String!, email: String!, password: String!, image: String!): User
   }
   input CurrentInput {
     id: String!

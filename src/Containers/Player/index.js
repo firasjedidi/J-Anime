@@ -23,6 +23,8 @@ const Player = ({param,id}) => {
   const navigation = useNavigation();
   const { SWIPE_RIGHT, SWIPE_LEFT} = swipeDirections;
   const [skips, setSkips] = useState({intro:0,next:92});
+  const {autoIntro,autoNext} = useSelector(state => state.player);
+
   const config = {
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 80
@@ -82,9 +84,8 @@ const Player = ({param,id}) => {
         setLoading(true);
       } 
       if ( status.didJustFinish) {
-        let auto = false
         console.log("didJustFinish didJustFinish didJustFinish ");
-        if(auto) await finshed.current.finshed();
+        if(autoNext) await finshed.current.finshed();
         else console.log("didJustFinish222 didJustFinish2222 didJustFinish22222 ");
 
       }
@@ -114,8 +115,7 @@ const Player = ({param,id}) => {
     if(convertToSec > skips.intro && convertToSec < skips.next){
       await videoRef.current.playFromPositionAsync(amount * 15250);
     }else {
-      let auto = false
-      if (auto) await videoRef.current.playFromPositionAsync(skips.intro * 1000);
+      if (autoIntro) await videoRef.current.playFromPositionAsync(skips.intro * 1000);
       else{ 
         await videoRef.current.playFromPositionAsync(0*15250);  
       };
