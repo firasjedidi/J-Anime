@@ -47,9 +47,22 @@ query CheckPlayList($user: ID!, $videoId: ID!) {
     }
   }
 `;
-
+const GET_PLAYLISTS = gql`
+    query Playlists($user: ID!) {
+        playlists(user: $user) {
+            current {
+                id
+            }
+            _id
+            image
+            info
+            name
+        }
+    }
+`;
 export {
     GET_User,
     GET_PLAYLIST,
-    Check_PLAYLIST
+    Check_PLAYLIST,
+    GET_PLAYLISTS,
 }

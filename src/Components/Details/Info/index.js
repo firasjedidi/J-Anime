@@ -1,6 +1,6 @@
 import { View, Text,Image ,Pressable,Alert } from 'react-native'
 import React from 'react'
-import {useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PlayIcon} from "react-native-heroicons/mini";
 import { useNavigation } from '@react-navigation/native';
 import { animeNameConverter, covertToDub, covertToSub, customAlert } from '../../../utlis/helpers/helper';
@@ -26,7 +26,7 @@ const Info = ({data}) => {
       const animeName = animeNameConverter(episodes[0].id);
       const playlist = await checkPlaylist({user:user.id,videoId:animeName});
       if ( playlist.checkPlayList ) {   
-        const { current, subordub ,_id,total} = playlist.checkPlayList;
+        const { current, subordub ,_id,} = playlist.checkPlayList;
         let ep = current.id ;
         if (subordub !== type) {  
           customAlert(

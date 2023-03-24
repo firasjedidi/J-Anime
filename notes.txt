@@ -1,8 +1,6 @@
 hot&new=>{
     -check the source page for another api and connect with current api .
 }
-logo for the app
-banner bottom section => navigation with check of playlist;
 player =>{
     -handel skip retest when i click too many times.
 }

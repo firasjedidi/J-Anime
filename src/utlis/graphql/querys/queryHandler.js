@@ -1,5 +1,5 @@
 import {  useQuery } from '@apollo/client';
-import { Check_PLAYLIST ,GET_PLAYLIST} from './querys';
+import { Check_PLAYLIST ,GET_PLAYLIST,GET_PLAYLISTS} from './querys';
 import { client } from '../client';
 const checkPlaylist = async(variables)=>{
     try {
@@ -15,11 +15,20 @@ const getPlayList = async (id) =>{
         const {data} = await client.query({query:GET_PLAYLIST, variables: { playlistId:id },fetchPolicy: "no-cache"});
         return data
     } catch (error) {
-        console.log(error);
         return error?.message
     }   
 }
+const getPlayLists = async (variables) =>{
+    try {
+        const {data} = await client.query({query:GET_PLAYLISTS,variables,fetchPolicy: "no-cache"});
+        return data
+    } catch (error) {
+        return error?.message
+    }
+    
+}
 export{
     checkPlaylist,
-    getPlayList
+    getPlayList,
+    getPlayLists
 }

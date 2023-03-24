@@ -4,7 +4,7 @@
     "slug": "J-Anime",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/J-Anime.png",
     "userInterfaceStyle": "dark",
     "scheme": "https://auth.expo.io/@fj20ths/J-Anime",
     "splash": {

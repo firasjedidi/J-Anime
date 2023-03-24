@@ -9,7 +9,6 @@ import { HomeScel ,} from '../skeletens';
 const Hero = () => {
   const { height: DEVICE_HEIGHT } = Dimensions.get("window");
   const {data,error,status } = useQuery('bannerAnime',()=>getBannerAnime())
-
   if (error) {
     console.log(error,"hero error");
   }

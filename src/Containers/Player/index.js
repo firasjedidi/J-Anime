@@ -87,9 +87,10 @@ const Player = ({param,id}) => {
         console.log("didJustFinish didJustFinish didJustFinish ");
         if(autoNext) await finshed.current.finshed();
         else console.log("didJustFinish222 didJustFinish2222 didJustFinish22222 ");
-
       }
-      
+      if(status.positionMillis/1000 >= skips.next){
+        if(autoNext) await finshed.current.finshed();
+      }
     } 
   };
   const getSkips = async()=>{

@@ -1,6 +1,6 @@
-import { View, Text,Pressable } from 'react-native'
+import {  Text,Pressable } from 'react-native'
 import React, {  useEffect, useState}  from 'react'
-import { useSelector,useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const Skips = ({skips,vidStatus,finshed,videoRef}) => {
     const [skipIntro, setSkipIntro] = useState(false);
@@ -17,15 +17,21 @@ const Skips = ({skips,vidStatus,finshed,videoRef}) => {
         setSkipNext(false);
       }
     };
+
     useEffect(() => {
-      if(skipIntro && positionMillis / 1000 > skips.intro) setSkipIntro(false);
-      else if (!skipIntro && positionMillis / 1000 <= skips.intro) {
-        setSkipIntro(true);
-      } else if (skipNext && positionMillis / 1000 <= skips.next-60) {
-        setSkipNext(false);
-      } else if (!skipNext && positionMillis / 1000 >= skips.next-60) {
-        setSkipNext(true);
+      if (autoIntro || autoNext) {
+        return;
+      }else{
+        if(skipIntro && positionMillis / 1000 > skips.intro) setSkipIntro(false);
+        else if (!skipIntro && positionMillis / 1000 <= skips.intro) {
+          setSkipIntro(true);
+        } else if (skipNext && positionMillis / 1000 <= skips.next-60) {
+          setSkipNext(false);
+        } else if (!skipNext && positionMillis / 1000 >= skips.next-60) {
+          setSkipNext(true);
+        }
       }
+     
     }, [positionMillis,skipIntro,skipNext ]);
   
     if (skipIntro) {   

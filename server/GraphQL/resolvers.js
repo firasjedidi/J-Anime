@@ -9,6 +9,10 @@ const resolvers = {
     playlist: async (parent, { id }) => {
       return Playlist.findById(id);
     },
+    playlists:async(parent,{user},context) =>{
+      const playlists = await Playlist.find({ user });
+      return playlists;
+    },
     checkPlayList: async (parent, { user,videoId },context) => {
       const playlists = await Playlist.find({ user });
       if (!playlists) {

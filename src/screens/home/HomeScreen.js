@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const [animationValue] = useState(new Animated.Value(0));
   const backgroundInterpolate = animationValue.interpolate({
     inputRange : [0, 570],
-    outputRange : ["rgba(0,0,0,.0)" , "rgba(0,0,0,.4)"]
+    outputRange : ["rgba(0,0,0,.0)" , "rgba(2,2,2,.4)"]
   })
   const backgroundStyle = {
     backgroundColor : backgroundInterpolate
@@ -39,9 +39,9 @@ const HomeScreen = () => {
           view === "Home" && (
             <>
               <RecentEP />
-              <ContinueWatching />
               <Trending />
               <Popular/>
+              <ContinueWatching />
               <RandomAnime />
             </>
           )

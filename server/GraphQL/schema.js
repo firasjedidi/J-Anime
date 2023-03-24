@@ -35,6 +35,7 @@ const typeDefs = gql`
   type Query {
     user(id: ID!): User
     playlist(id: ID!): Playlist
+    playlists(user: ID!): [Playlist]
     checkPlayList(user: ID!, videoId: ID!): Playlist
   }
 

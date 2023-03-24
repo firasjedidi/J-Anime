@@ -69,12 +69,14 @@ const getRandom = async (page=2,perpage=20)=>{
   return newres ? newres : res;
 }
 const getBannerAnime = async()=>{
-  const {data} = await api.get(`/random-anime`)
-  if (!data)
+
+  const {data:{results}}= await api.get(`/trending`)
+  if (!results)
     return {
       error: "No data Available",
     };
-  return data;
+  const random = Math.floor(Math.random()*results.length);
+  return results[random];
 }
 const getAiring= async (bool)=>{
   const {data:{results}} = await api.get(`/airing-schedule?notYetAired=${bool}`)

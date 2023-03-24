@@ -4,18 +4,43 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { InformationCircleIcon} from "react-native-heroicons/outline";
 import { PlayIcon,PlusIcon,ChevronDownIcon} from "react-native-heroicons/mini";
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector} from 'react-redux';
 import { addToList } from '../../../Redux-Store/playList';
 import { getInfo } from '../../../utlis/api';
+import { animeNameConverter, covertToDub, covertToSub, customAlert } from '../../../utlis/helpers/helper';
+import {checkPlaylist} from '../../../utlis/graphql/querys/queryHandler';
+import {createPlaylist,updatePlaylist} from '../../../utlis/graphql/mutaions/mutaionsHandler'
 const BottomSection = ({newData}) => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
-  const player = async(id) => {
-    const res = await getInfo(parseInt(id));
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {user} = useSelector(state => state.user);
+  const player = async() => {
+    const res = await getInfo(parseInt(newData.id));
     if (res) {
-      navigation.navigate("PlayerScreen",{id:res.episodes[0].id,ep:res.episodes.length,img:res.image,info:res.id})
-    }else{
-      navigation.navigate('DetaliScreen',{id:id});
+      const {image,episodes,id} = res
+      const animeName = animeNameConverter(episodes[0].id);
+      const playlist = await checkPlaylist({user:user.id,videoId:animeName});
+      if ( playlist.checkPlayList ) {
+        const { current, subordub ,_id} = playlist.checkPlayList;
+        const ep = current.id
+        const update = { current: { id:ep}, subordub, updatePlaylistId:_id, videos:false,total:episodes.length };
+        const playListId = await updatePlaylist(update);
+        if(playListId.updatePlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.updatePlaylist._id});
+        else alert("somthing went wrong try again"+playListId)
+      } else {
+        const subordub = "sub";
+        const ep = data.episodes[0].id;
+        const creation = {
+          name:animeName,current:{id:ep},subordub,
+          total:episodes.length,image:image,info:id,
+          userId:user.id
+        };
+        const playListId = await createPlaylist(creation);
+        if(playListId.createPlaylist)navigation.navigate('PlayerScreen', {ep,id:playListId.createPlaylist._id});
+        else alert("somthing went wrong try again"+playListId)
+      }
+    } else {
+      navigation.navigate('DetaliScreen',{id:newData.id})
     }
   }
  

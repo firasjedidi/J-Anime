@@ -7,7 +7,7 @@ const ContinueCard = ({title,data}) => {
 
     const renderItem = ({item,index})=>(
        <>
-            <Pressable className="  m-1" key={index} onPress={()=>navigation.navigate('PlayerScreen',{id:item.current.id,ep:item.total,img:item.image,info:item.info})}>
+            <Pressable className="  m-1" key={index} onPress={()=>navigation.navigate('PlayerScreen',{ep:item.current.id,id:item._id})}>
                 <View className="items-center bg-white/10   rounded-sm "  >
                     <Image 
                         key={index}
@@ -17,7 +17,7 @@ const ContinueCard = ({title,data}) => {
                     />
                     <View className="flex-row justify-between  h-12 w-40 items-center">
                         <Text numberOfLines={3}  className=" text-xs  text-center    text-white">
-                            {item.id }
+                            {item.name }
                         </Text> 
                         <Pressable onPress={()=>navigation.navigate('DetaliScreen',{id:item.info})}>
                             <InformationCircleIcon size={24} color={"white"} />
